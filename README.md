@@ -1,4 +1,4 @@
-#COBOL examples
+# COBOL examples
 To compile the programs on a Linux computer, open the terminal in the main directory and type
 	make
 you will find the executables in the folder. To run one of the program just type
