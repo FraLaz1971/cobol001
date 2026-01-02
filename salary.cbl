@@ -1,0 +1,49 @@
+        IDENTIFICATION DIVISION.
+        PROGRAM-ID. SAL. 
+        AUTHOR. Francesco Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 02/01/2026. 
+        DATE-COMPILED. 02/01/2026. 
+        SECURITY. free.
+      * THIS PROGRAM ACCUMULATES SALARY DETAILS.
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo Linux. 
+        OBJECT-COMPUTER. Lenovo Linux.
+        INPUT-OUTPUT SECTION. 
+        FILE-CONTROL.
+			SELECT SALARY-FILE ASSIGN TO "salshortc.dat".
+      *        ORGANIZATION IS SEQUENTIAL. 
+      *        ACCESS IS SEQUENTIAL.
+        DATA DIVISION. 
+			FILE SECTION. 
+			FD SALARY-FILE.
+			01 SALARY-RECORD.
+				03 RECORD-TYPE         PIC X.
+				03 FILLER              PIC X.
+				03 SALARY              PIC 9(6).
+				03 LF                  PIC X.
+      * 	01 DETAIL-RECORD. 
+      *	    03 DETAIL-NAME.		
+      * 		05 DETAIL-INITIALS PIC XX.
+      * 		05 DETAIL-SURNAME PIC X(15). 
+      * 	03 DETAIL-ADDRESS.
+      *			05 DETAIL-NUMBER PIC 9(4).
+      *			05 DETAIL-STREET PIC x(20).
+      *			05 DETAIL-TOWN PIC X(20).
+        WORKING-STORAGE SECTION. 
+		01 SALARY-TOTAL            PIC 9(8).
+        PROCEDURE DIVISION. 
+        AA-START. 
+            OPEN INPUT SALARY-FILE. 
+			MOVE ZEROS TO SALARY-TOTAL.
+		BB-READ. 
+			READ SALARY-FILE AT END GO TO CC-END.
+			ADD SALARY TO SALARY-TOTAL.
+      *		DISPLAY RECORD-TYPE.
+      *		DISPLAY SALARY.
+			GO TO BB-READ.
+		CC-END.  
+			DISPLAY "total salary: " SALARY-TOTAL.
+            CLOSE SALARY-FILE. 
+			STOP RUN.
