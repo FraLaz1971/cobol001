@@ -2,8 +2,8 @@
         PROGRAM-ID. CEXP. 
         AUTHOR. Francesco Lazzarotto.
         INSTALLATION. OK. 
-        DATE-WRITTEN. 02/01/2026. 
-        DATE-COMPILED. 02/01/2026. 
+        DATE-WRITTEN. 03/01/2026. 
+        DATE-COMPILED. 03/01/2026. 
         SECURITY. free.
       * THIS CREATE SALARY DETAILS FILE.
         ENVIRONMENT DIVISION. 
