@@ -1,0 +1,80 @@
+        IDENTIFICATION DIVISION.
+        PROGRAM-ID. CEXP. 
+        AUTHOR. Francesco Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 02/01/2026. 
+        DATE-COMPILED. 02/01/2026. 
+        SECURITY. free.
+      * THIS CREATE SALARY DETAILS FILE.
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo-Linux. 
+        OBJECT-COMPUTER. Lenovo-Linux.
+        INPUT-OUTPUT SECTION. 
+        FILE-CONTROL.
+			SELECT EXPENSES-FILE 
+			ASSIGN TO "expenses.dat"
+            ORGANIZATION LINE SEQUENTIAL
+            ACCESS IS SEQUENTIAL.
+        DATA DIVISION. 
+			FILE SECTION. 
+			FD EXPENSES-FILE.
+			01 EXPENSE-RECORD.
+				03 VENDOR	           PIC X(20).
+				03 FILLER              PIC X.
+				03 BUYER	           PIC X(20).
+				03 FILLER              PIC X.
+				03 AMOUNT              PIC S9(4)V999 .
+				03 FILLER              PIC X.
+				03 MDATE               PIC X(10).
+				03 LF                  PIC X.
+        WORKING-STORAGE SECTION. 
+			01 WS-EXPENSE-RECORD.
+				03 WS-VENDOR	          PIC X(20).
+				03 WS-FILLER1             PIC X.
+				03 WS-BUYER	              PIC X(20).
+				03 WS-FILLER2             PIC X.
+				03 WS-AMOUNT              PIC S9(4)V999.
+				03 WS-FILLER3             PIC X.
+				03 WS-MDATE               PIC X(10).
+				03 WS-LF                  PIC X.
+        PROCEDURE DIVISION. 
+        AA-START. 
+            OPEN OUTPUT EXPENSES-FILE. 
+		BB-WRITE. 
+      *
+			MOVE "Europa Verde" TO WS-VENDOR.
+			MOVE " " TO WS-FILLER1.
+			MOVE "Francesco Lazzarotto" TO WS-BUYER.
+			MOVE " " TO WS-FILLER2.
+			MOVE -5.00 TO WS-AMOUNT
+			MOVE " " TO WS-FILLER3.
+			MOVE "2025-10-12" TO WS-MDATE.
+			MOVE FUNCTION CHAR(11) TO WS-LF
+			MOVE WS-EXPENSE-RECORD TO EXPENSE-RECORD.
+			WRITE EXPENSE-RECORD.
+      *
+			MOVE "TIM ITALIA SPA" TO WS-VENDOR.
+			MOVE " " TO WS-FILLER1.
+			MOVE "Francesco Lazzarotto" TO WS-BUYER.
+			MOVE " " TO WS-FILLER2.
+			MOVE -50.00 TO WS-AMOUNT
+			MOVE " " TO WS-FILLER3.
+			MOVE "2025-11-06" TO WS-MDATE.
+			MOVE FUNCTION CHAR(11) TO WS-LF
+			MOVE WS-EXPENSE-RECORD TO EXPENSE-RECORD.
+			WRITE EXPENSE-RECORD.
+      *
+			MOVE "Trenitalia SPA" TO WS-VENDOR.
+			MOVE " " TO WS-FILLER1.
+			MOVE "Francesco Lazzarotto" TO WS-BUYER.
+			MOVE " " TO WS-FILLER2.
+			MOVE -5.75 TO WS-AMOUNT
+			MOVE " " TO WS-FILLER3.
+			MOVE "2025-12-24" TO WS-MDATE.
+			MOVE FUNCTION CHAR(11) TO WS-LF
+			MOVE WS-EXPENSE-RECORD TO EXPENSE-RECORD.
+			WRITE EXPENSE-RECORD.
+		CC-END.  
+            CLOSE EXPENSES-FILE. 
+			STOP RUN.

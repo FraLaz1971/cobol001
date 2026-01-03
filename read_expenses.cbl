@@ -1,0 +1,44 @@
+        IDENTIFICATION DIVISION.
+        PROGRAM-ID. ReadExpenses. 
+        AUTHOR. Francesco Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 03/01/2026. 
+        DATE-COMPILED. 03/01/2026. 
+        SECURITY. free.
+      * THIS PROGRAM READ EXPENSES AND COMPUTES TOTAL.
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo Linux. 
+        OBJECT-COMPUTER. Lenovo Linux.
+        INPUT-OUTPUT SECTION. 
+        FILE-CONTROL.
+			SELECT EXPENSES-FILE ASSIGN TO "expenses.dat"
+            ORGANIZATION LINE SEQUENTIAL
+            ACCESS IS SEQUENTIAL.
+        DATA DIVISION. 
+			FILE SECTION. 
+			FD EXPENSES-FILE.
+			01 EXPENSE-RECORD.
+				03 VENDOR	           PIC X(20).
+				03 FILLER              PIC X.
+				03 BUYER	           PIC X(20).
+				03 FILLER              PIC X.
+				03 AMOUNT              PIC S9(4)V999.
+				03 FILLER              PIC X.
+				03 MDATE               PIC X(10).
+				03 LF                  PIC X.
+        WORKING-STORAGE SECTION. 
+			01 AMOUNT-TOTAL   COMP        PIC S9(6)V99.
+        PROCEDURE DIVISION. 
+        AA-START. 
+            OPEN INPUT EXPENSES-FILE. 
+			MOVE ZEROS TO AMOUNT-TOTAL.
+		BB-READ. 
+			READ EXPENSES-FILE AT END GO TO CC-END.
+			ADD AMOUNT TO AMOUNT-TOTAL.
+      *		DISPLAY AMOUNT.
+			GO TO BB-READ.
+		CC-END.  
+			DISPLAY "total amount: " AMOUNT-TOTAL.
+            CLOSE EXPENSES-FILE. 
+			STOP RUN.

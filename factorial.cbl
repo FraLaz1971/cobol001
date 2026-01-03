@@ -1,0 +1,25 @@
+		IDENTIFICATION DIVISION.
+        PROGRAM-ID. DIV. 
+        AUTHOR. Francesco Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 02/01/2026. 
+        DATE-COMPILED. 02/01/2026. 
+        SECURITY. free.
+      * THIS PROGRAM THE FACTORIAL OF A NUMBER
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo Linux. 
+        OBJECT-COMPUTER. Lenovo Linux.
+        DATA DIVISION. 
+        WORKING-STORAGE SECTION.
+        01 C-NUM			PIC 9(5).
+        01 FAC BINARY-LONG VALUE 1.
+        01 I BINARY-LONG.
+        PROCEDURE DIVISION.
+        DISPLAY "Enter a positive integer"
+        ACCEPT C-NUM
+        PERFORM VARYING I FROM 1 BY 1 UNTIL I > C-NUM
+          COMPUTE FAC=I*FAC
+        END-PERFORM
+		DISPLAY "FAC(" C-NUM ") = " FAC
+		STOP RUN.

@@ -1,0 +1,48 @@
+		IDENTIFICATION DIVISION.
+        PROGRAM-ID. DIV. 
+        AUTHOR. Francesco Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 02/01/2026. 
+        DATE-COMPILED. 02/01/2026. 
+        SECURITY. free.
+      * THIS PROGRAM SHOWS HOW TO USE DIVIDE IN COBOL
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo Linux. 
+        OBJECT-COMPUTER. Lenovo Linux.
+        DATA DIVISION. 
+        WORKING-STORAGE SECTION.
+        01 A-NUM			PIC S9(5) VALUE 4.
+        01 B-NUM			PIC S9(5) VALUE 8.
+        01 C-NUM			PIC S9(5) VALUE 0.
+        01 FAC BINARY-LONG VALUE 1.
+        01 I BINARY-LONG.
+        01 TOTAL-MONEY 	    PIC S9(4)V99 COMP.
+        PROCEDURE DIVISION.
+        DISPLAY "A-NUM = " A-NUM " B-NUM = " B-NUM " C-NUM = " C-NUM.
+        DIVIDE A-NUM INTO B-NUM GIVING C-NUM.
+        DISPLAY "B-NUM / A-NUM = "  C-NUM.
+        ADD A-NUM B-NUM TO C-NUM.
+        DISPLAY "A-NUM + B-NUM + C-NUM = "  C-NUM.
+        SUBTRACT B-NUM FROM C-NUM GIVING A-NUM.
+        DISPLAY "C-NUM - B-NUM = " A-NUM.
+        MULTIPLY A-NUM BY B-NUM GIVING C-NUM.
+        DISPLAY "A-NUM * B-NUM = " C-NUM.
+        COMPUTE A-NUM = C-NUM - B-NUM
+        DISPLAY "A-NUM = " A-NUM
+        COMPUTE C-NUM = A-NUM + A-NUM
+        DISPLAY "C-NUM = " C-NUM 
+        COMPUTE C-NUM = C-NUM * 2
+        DISPLAY "C-NUM = " C-NUM 
+        COMPUTE A-NUM = C-NUM / B-NUM
+        DISPLAY "A-NUM = " A-NUM 
+        COMPUTE C-NUM = A-NUM ** 2
+        DISPLAY "C-NUM = " C-NUM 
+        COMPUTE C-NUM = C-NUM / (A-NUM + A-NUM)        
+        DISPLAY "C-NUM = " C-NUM 
+        PERFORM VARYING I FROM 1 BY 1 UNTIL I > C-NUM
+          COMPUTE FAC=I*FAC
+        END-PERFORM
+		DISPLAY "FAC(" C-NUM ") = " FAC
+		
+		STOP RUN.
