@@ -35,7 +35,7 @@
       *The type and group on the D type record need not be pictured because
       *they are described on the other amend record. Remember, they share
       *the same piece of store and only one record can be in that store at a time
-		FD MAST-OUT.
+		FD MAST-OUT	BLOCK CONTAINS 80 RECORDS.
 		01 MAST-OUT-REC.
 		  03 MAST-OUT-GROUP PIC X(5).
           03 MAST-OUT-NAME PIC X(14).
