@@ -2,7 +2,7 @@ COB=cobc -x
 RM=rm -rf
 TARGETS=employee hello salary salary_data sumnum divide factorial create_expenses data_length read_expenses \
 read_ascii_binary record001 record002 moves manip pay control branches branches001 branches002 branches003 \
-mistakes perform exsc008 record recordf sequence update_master create_mast_amend
+mistakes perform exsc008 record recordf sequence update_master create_mast_amend finderr
 .PHONY: all clean
 
 all: $(TARGETS)
@@ -65,6 +65,8 @@ sequence: sequence.cbl
 update_master: update_master.cbl
 	$(COB) $< -o $@
 create_mast_amend: create_mast_amend.cbl
+	$(COB) $< -o $@
+finderr: finderr.cbl
 	$(COB) $< -o $@
 
 
