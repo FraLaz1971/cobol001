@@ -12,9 +12,9 @@
         OBJECT-COMPUTER. Lenovo Linux.
         INPUT-OUTPUT SECTION. 
         FILE-CONTROL.
-			SELECT SALARY-FILE ASSIGN TO "salshortc.dat".
-      *        ORGANIZATION IS SEQUENTIAL. 
-      *        ACCESS IS SEQUENTIAL.
+			SELECT SALARY-FILE ASSIGN TO "salshortc.dat"
+              ORGANIZATION IS SEQUENTIAL 
+              ACCESS IS SEQUENTIAL.
         DATA DIVISION. 
 			FILE SECTION. 
 			FD SALARY-FILE.

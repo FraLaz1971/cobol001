@@ -1,0 +1,87 @@
+        IDENTIFICATION DIVISION.
+        PROGRAM-ID. SAL. 
+        AUTHOR. Francesco Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 05/01/2026. 
+        DATE-COMPILED. 05/01/2026. 
+        SECURITY. free.
+      * THIS PROGRAM CREATES MASTER AND AMENDMENT FILE TO USE AS INPUT.
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo Linux. 
+        OBJECT-COMPUTER. Lenovo Linux.
+        INPUT-OUTPUT SECTION. 
+        FILE-CONTROL.
+          SELECT MAST-OUT ASSIGN "inMastDAO1.dat".
+		  SELECT AMEND-OUT ASSIGN "inAmendDAO3.dat".
+		DATA DIVISION.
+		FILE SECTION.
+		FD MAST-OUT.
+		01 MAST-OUT-REC.
+		  03 MAST-OUT-GROUP PIC X(5).
+		  03 MAST-OUT-NAME  PIC X(14).
+		  03 MAST-OUT-TOTAL PIC 9(6).
+		  03 LF             PIC X.
+		FD AMEND-OUT.
+		01 AMEND-REC.
+		  03 AMEND-TYPE PIC X.
+		  03 AMEND-GROUP PIC X(5). 
+          03 AMEND-NAME PIC X(14).
+          03 AMEND-TOTAL PIC 9(6).
+		  03 A-LF        PIC X.
+        01 AMEND-REC-D.
+          03 FILLER PIC X(6).
+          03 AMEND-DEL PIC X(6).
+		  03 D-LF      PIC X.
+      *The type and group on the D type record need not be pictured because
+      *they are described on the other amend record. Remember, they share
+      *the same piece of store and only one record can be in that store at a time
+        WORKING-STORAGE SECTION. 
+        PROCEDURE DIVISION.
+		AA-START.
+		  OPEN OUTPUT MAST-OUT AMEND-OUT.
+		BB-FILL.
+      *	FILL MASTER OUTPUT RECORD
+		  MOVE "EMPLO" TO MAST-OUT-GROUP.
+		  MOVE "Johnny Marr" TO MAST-OUT-NAME.
+		  MOVE  000010 TO MAST-OUT-TOTAL.
+		  MOVE FUNCTION CHAR(11) TO LF
+		  PERFORM DD-WRITE-MAST.
+		  MOVE "EMPLO" TO MAST-OUT-GROUP.
+		  MOVE "Ronnie Carter" TO MAST-OUT-NAME.
+		  MOVE 000050 TO MAST-OUT-TOTAL.
+		  PERFORM DD-WRITE-MAST.
+		  MOVE "ADMIN" TO MAST-OUT-GROUP.
+		  MOVE "Lena Rotney" TO MAST-OUT-NAME.
+		  MOVE 000020 TO MAST-OUT-TOTAL.
+		  PERFORM DD-WRITE-MAST.
+      *	FILL AMEND RECORD TYPE A
+		  MOVE "A" TO AMEND-TYPE.
+		  MOVE "ADMIN" TO AMEND-GROUP. 
+          MOVE "Lena Rotney" TO AMEND-NAME.
+          MOVE 000040 TO AMEND-TOTAL.
+		  MOVE FUNCTION CHAR(11) TO A-LF
+          PERFORM EE-WRITE-AMEND.
+      *	FILL AMEND RECORD TYPE D
+		  MOVE "D" TO AMEND-TYPE.
+		  MOVE "EMPLO" TO AMEND-GROUP. 
+          MOVE "DELETE" TO AMEND-DEL.
+		  MOVE FUNCTION CHAR(11) TO D-LF
+          PERFORM EE-WRITE-AMEND.
+      *	FILL AMEND RECORD TYPE I
+		  MOVE  "I" TO AMEND-TYPE.
+		  MOVE "ADMIN" TO AMEND-GROUP. 
+          MOVE "Tony Misser" TO AMEND-NAME .
+          MOVE 000070 TO AMEND-TOTAL.
+          PERFORM EE-WRITE-AMEND.
+          GO TO JJ-END.
+		DD-WRITE-MAST.
+		  WRITE MAST-OUT-REC.
+		EE-WRITE-AMEND.
+		  IF AMEND-TYPE = "D"
+		    WRITE AMEND-REC-D
+		  ELSE
+		    WRITE AMEND-REC.
+		JJ-END. 
+		  CLOSE AMEND-OUT MAST-OUT.
+		  STOP RUN.
