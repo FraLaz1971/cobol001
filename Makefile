@@ -3,7 +3,7 @@ RM=rm -rf
 TARGETS=employee hello salary salary_data sumnum divide factorial create_expenses data_length read_expenses \
 read_ascii_binary record001 record002 moves manip pay control branches branches001 branches002 branches003 \
 mistakes perform exsc008 record recordf sequence update_master create_mast_amend finderr diffrecs readrecs \
-
+create_ex001_data ex001 table001 yeartot create_yeartot_data readamounts
 .PHONY: all clean
 
 all: $(TARGETS)
@@ -73,7 +73,18 @@ diffrecs: diffrecs.cbl
 	$(COB) $< -o $@
 readrecs: readrecs.cbl
 	$(COB) $< -o $@
-
+create_ex001_data: create_ex001_data.cbl
+	$(COB) $< -o $@
+ex001: ex001.cbl
+	$(COB) $< -o $@
+table001: table001.cbl
+	$(COB) $< -o $@
+create_yeartot_data: create_yeartot_data.cbl
+	$(COB) $< -o $@
+yeartot: yeartot.cbl
+	$(COB) $< -o $@
+readamounts: readamounts.cbl
+	$(COB) $< -o $@
 
 clean:
 	$(RM) $(TARGETS)
