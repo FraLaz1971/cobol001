@@ -1,0 +1,69 @@
+        IDENTIFICATION DIVISION.
+        PROGRAM-ID. TABLE2.
+        AUTHOR. FranceMSCo Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 09/01/2026. 
+        DATE-COMPILED. 09/01/2026. 
+        SECURITY. free.
+      * THIS CREATE AN INPUT FILE FOR PROGRAM TABLE2 .
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo Linux. 
+        OBJECT-COMPUTER. Lenovo Linux.
+        INPUT-OUTPUT SECTION. 
+        FILE-CONTROL.
+          SELECT IN-FILE ASSIGN "OUT03.dat".
+        DATA DIVISION.
+        FILE SECTION.
+		FD IN-FILE.
+		01 R-LIST.
+			03 R-SAVE OCCURS 4 TIMES.
+				05 R-NAME PIC X(4).
+			    05 FS       PIC X.
+				05 R-AMOUNT	PIC S999V99.
+				05 FILLER PIC X.
+		WORKING-STORAGE SECTION.
+		01 RE-REC       PIC 9(3) VALUE 0.
+		01 TOT-AMOUNT   PIC S9(5)V99 VALUE 0.
+		01 I            PIC 9(3).
+		01 SEL          PIC X .
+		01 MSC          PIC X OCCURS 4 TIMES.
+		01 WR           PIC 99 VALUE 0.
+        PROCEDURE DIVISION.
+		AA-START.
+  		  OPEN INPUT IN-FILE.
+  		AB-ENQ.
+  		  DISPLAY "DO YOU WANT TO SHOW RECORDS READ? (Y OR N)"
+  		  ACCEPT SEL.
+  		  IF SEL = "Y" THEN
+  		     DISPLAY "WHICH ROW (1-4) DO YOU WANT TO READ?"
+             DISPLAY "INSERT 4 VALUES (0 OR 1)"
+        	 PERFORM AC-INR  
+        	   VARYING I FROM 1 BY 1 
+        	   UNTIL I>4.
+        	 
+		BB-READ.
+		  READ IN-FILE AT END GO TO ZZ-END.
+          ADD 4 TO RE-REC.
+        CC-PROCESS.
+          PERFORM DD-SUM
+			VARYING I FROM 1 BY 1
+ 			   UNTIL I > 4.
+          GO TO BB-READ.
+        DD-SUM.
+			ADD R-AMOUNT(I) TO TOT-AMOUNT.
+        AC-INR.
+          ACCEPT MSC(I).
+		EE-SHOWALL.
+		  PERFORM EA-SHOW VARYING I FROM 1 BY 1
+		  UNTIL I > 4.
+		EA-SHOW.
+		  IF MSC(I) = "1"
+		    DISPLAY "NAME: " R-NAME(I) " AMOUNT " R-AMOUNT(I).
+	    ZZ-END.
+	      DISPLAY RE-REC " RECORDS READ".
+	      IF SEL = "Y" PERFORM EE-SHOWALL.
+	      DISPLAY "The tot. amount is " TOT-AMOUNT.
+		  DISPLAY "PROGRAM ENDED: EXITING".
+          CLOSE IN-FILE.
+		  STOP RUN.

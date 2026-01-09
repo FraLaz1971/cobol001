@@ -1,0 +1,77 @@
+        IDENTIFICATION DIVISION.
+        PROGRAM-ID. TABLE2.
+        AUTHOR. Francesco Lazzarotto.
+        INSTALLATION. OK. 
+        DATE-WRITTEN. 09/01/2026. 
+        DATE-COMPILED. 09/01/2026. 
+        SECURITY. free.
+      * THIS CREATE AN INPUT FILE FOR PROGRAM TABLE2 .
+        ENVIRONMENT DIVISION. 
+        CONFIGURATION SECTION. 
+        SOURCE-COMPUTER. Lenovo Linux. 
+        OBJECT-COMPUTER. Lenovo Linux.
+        INPUT-OUTPUT SECTION. 
+        FILE-CONTROL.
+          SELECT IN-FILE ASSIGN "TAB02.dat".
+          SELECT OUT-FILE ASSIGN "OUT03.dat".
+        DATA DIVISION.
+        FILE SECTION.
+		FD IN-FILE.
+		01 R-LIST.
+			03 R-SAVE OCCURS 6 TIMES.
+				05 R-NAME PIC X(4).
+			    05 FS      PIC X.
+				05 R-AMOUNT	PIC 999V99.
+				05 FILLER PIC X.
+		FD OUT-FILE.
+		01 W-LIST.
+			03 W-SAVE OCCURS 4 TIMES.		  
+			  05 W-NAME   PIC X(4). 
+			  05 OFS      PIC X.
+			  05 W-AMOUNT	PIC 999V99.
+			  05 LF      PIC X.
+		WORKING-STORAGE SECTION.
+		01 RE-REC   PIC 9(3) VALUE 0.
+		01 WR-REC   PIC 9(3) VALUE 0.
+        PROCEDURE DIVISION.
+		AA-START.
+      *		  OPEN INPUT IN-FILE.
+		  OPEN OUTPUT OUT-FILE.
+		AB-WRITE.
+		  GO TO ZZ-END.
+		BB-READ.
+		  READ IN-FILE AT END GO TO ZZ-END.
+          MOVE R-LIST TO W-LIST.
+          ADD 1 TO RE-REC.
+        CC-PROCESS.
+          WRITE W-LIST.
+          ADD 1 TO WR-REC.
+          GO TO BB-READ.
+        DD-ADDREC.
+          MOVE SPACES TO W-LIST.
+	      MOVE "Ted" TO W-NAME(1).
+	      MOVE "," TO OFS(1).
+	      MOVE 885.98 TO W-AMOUNT(1).
+	      MOVE FUNCTION CHAR(11) TO LF(1).
+	      MOVE "Olly" TO W-NAME(2).
+	      MOVE "," TO OFS(2).
+	      MOVE 768.85 TO W-AMOUNT(2).
+	      MOVE FUNCTION CHAR(11) TO LF(2).
+	      MOVE "Mary" TO W-NAME(3).
+	      MOVE "," TO OFS(3).
+	      MOVE 432.12 TO W-AMOUNT(3).
+	      MOVE FUNCTION CHAR(11) TO LF(3).
+	      MOVE "Asia" TO W-NAME(4).
+	      MOVE "," TO OFS(4).
+	      MOVE 120.10 TO W-AMOUNT(4).
+	      MOVE FUNCTION CHAR(11) TO LF(4).
+	      WRITE W-LIST.
+          ADD 4 TO WR-REC.
+	    ZZ-END.
+	      PERFORM DD-ADDREC.
+	      DISPLAY RE-REC " RECORDS READ".
+	      DISPLAY WR-REC " RECORDS WRITTEN".
+		  DISPLAY "PROGRAM ENDED: EXITING".
+      *   CLOSE IN-FILE.
+          CLOSE OUT-FILE. 
+		  STOP RUN.
