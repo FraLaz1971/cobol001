@@ -37,7 +37,7 @@
        move "set terminal qt persist;set grid;set tics scale 0; " 
        to value1.
        move
-    "set title 'FUNCTION COS';plot 'points.dat' using 1:2 with lines"
+       "set title 'FUNCTION COS';plot 'points.dat' using 1:2 with lines"
        to value2.
        write gnuplot.
        move function char(11) to LF.
